@@ -85,6 +85,18 @@ return [
     'city_name_ar' => 'اسم المدينه بالعربيه',
     'city_name_en' => 'اسم المدينه بالانجليزيه',
     'country_id' => 'الدوله',
-    'create_cities' => 'اضافه مدينه'
+    'create_cities' => 'اضافه مدينه',
+    'states' => 'المناطق \ الاحياء',
+    'create_states' => 'اضافه منطقه \ حي',
+    'state_name_ar' => 'اسم المنطقه بالعربيه',
+    'state_name_en' => 'اسم المنطقه بالانجليزيه',
+    'city_id' => 'المدينه',
+    'departments' => 'الاقسام',
+    'dep_name_ar'    => 'اسم القسم بالعربيه',
+    'dep_name_en'    => 'اسم القسم بالانجليزيه',
+    'parent_id'      => 'فرع من',
+    'dep_icon'           => 'الرمز',
+    'description'    => 'الوصف',
+    'keyword'        => 'الكلمات الدلاليه',
  
 ];

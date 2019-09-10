@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="{{ url('/')}}/design/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{ url('/')}}/design/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+    <link rel="stylesheet" href="{{ url('/')}}/design/adminlte/jstree/themes/default/style.css">
     <script src="{{url('/design/adminlte/dist/js/myfunction.js')}}"></script>
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">

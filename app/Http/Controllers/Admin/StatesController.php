@@ -3,21 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\CityDatatable;
+use App\DataTables\StateDatatable;
 
 use Illuminate\Http\Request;
+use App\Model\State;
 use App\Model\City;
-
-class CitiesController extends Controller
+use Form;
+class StatesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(CityDatatable $city)
+    public function index(StateDatatable $state)
     {
-        return $city->render('admin.cities.index', ['title' => trans('admin.cities')]);
+        return $state->render('admin.states.index', ['title' => trans('admin.states')]);
     }
 
     /**
@@ -27,8 +28,16 @@ class CitiesController extends Controller
      */
     public function create()
     {
+        if(request()->ajax())
+        {
+            if(request()->has('country_id'))
+            {
+                $select = request()->has('select') ? request('select') : '';
+                return Form::select('city_id', City::where('country_id', request('country_id'))->pluck('city_name_'.session('lang'), 'id'), $select ,  ['class' => 'form-control', 'placeholder' => '..............']);
+            }
+        }
     
-        return view('admin.cities.create', ['title' => trans('admin.create_cities')]);
+        return view('admin.states.create', ['title' => trans('admin.create_states')]);
     }
 
     /**
@@ -41,21 +50,24 @@ class CitiesController extends Controller
     {
         $data = $this->validate(request(),
         [
-           'city_name_ar' => 'required',
-           'city_name_en' => 'required',
-           'country_id' => 'required|numeric',
+           'state_name_ar' => 'required',
+           'state_name_en' => 'required',
+           'country_id'    => 'required|numeric',
+           'city_id'       => 'required|numeric',
         ], [] , [
-            'city_name_ar' => trans('admin.city_name_ar'),
-            'city_name_en' => trans('admin.city_name_en'),
-            'country_id' => trans('admin.country_id'),
+            'state_name_ar' => trans('admin.state_name_ar'),
+            'state_name_en' => trans('admin.state_name_en'),
+            'country_id'    => trans('admin.country_id'),
+            'city_id'       => trans('admin.city_id'),
+            
           
         ]);
         
     //    dd($data);
-        City::create($data);
+        State::create($data);
         
         session()->flash('success', trans('admin.record_added'));
-        return redirect(aurl('cities'));
+        return redirect(aurl('states'));
     }
 
     /**
@@ -77,10 +89,10 @@ class CitiesController extends Controller
      */
     public function edit($id)
     {
-        $cities =   City::find($id);
+        $states =   State::find($id);
         $title = trans('admin.edit');
 
-        return view('admin.cities.edit', compact('cities', 'title'));
+        return view('admin.states.edit', compact('states', 'title'));
     }
 
     /**
@@ -94,21 +106,24 @@ class CitiesController extends Controller
     {
         $data = $this->validate(request(),
         [
-           'city_name_ar' => 'required',
-           'city_name_en' => 'required',
-            'country_id' => 'required|numeric',
+           'state_name_ar' => 'required',
+           'state_name_en' => 'required',
+            'country_id'   => 'required|numeric',
+            'city_id'      => 'required|numeric',
         ], [] , [
-            'city_name_ar' => trans('admin.city_name_ar'),
-            'city_name_en' => trans('admin.city_name_en'),
-            'country_id' => trans('admin.country_id'),
+            'state_name_ar' => trans('admin.state_name_ar'),
+            'state_name_en' => trans('admin.state_name_en'),
+            'country_id'    => trans('admin.country_id'),
+            'city_id'       => trans('admin.city_id'),
+            
           
         ]);
         
        
-        City::where('id', $id)->update($data);
+        State::where('id', $id)->update($data);
 
         session()->flash('success', trans('admin.update_added'));
-        return redirect(aurl('cities'));
+        return redirect(aurl('states'));
     }
 
     /**
@@ -119,11 +134,11 @@ class CitiesController extends Controller
      */
     public function destroy($id)
     {
-        $cities = City::find($id);
+        $states = State::find($id);
        
-        $cities->delete();
+        $states->delete();
         session()->flash('success', trans('admin.deleted_record'));
-        return redirect(aurl('cities'));
+        return redirect(aurl('states'));
     }
 
     public function multi_delete() 
@@ -132,17 +147,17 @@ class CitiesController extends Controller
         {
             forEach(request('item') as $id)
             {
-                $cities = City::find($id);
+                $states = State::find($id);
                
-                $cities->delete();
+                $states->delete();
             }
         } else {
-            $cities = City::find(request('item'));
+            $states = State::find(request('item'));
            
-            $cities->delete();
+            $states->delete();
         }
         session()->flash('success', trans('admin.deleted_record'));
-        return redirect(aurl('cities'));
+        return redirect(aurl('states'));
         
     }
 }

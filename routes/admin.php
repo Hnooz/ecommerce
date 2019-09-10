@@ -23,6 +23,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         route::resource('cities', 'CitiesController');
         route::delete('cities/destroy/all', 'CitiesController@multi_delete');
 
+        route::resource('states', 'StatesController');
+        route::delete('states/destroy/all', 'StatesController@multi_delete');
+
+        route::resource('departments', 'DepartmentsController');
+
         route::get('/', function (){ return view('admin.home'); });
         
         route::get('settings', 'Settings@setting');
